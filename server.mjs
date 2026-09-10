@@ -106,7 +106,6 @@ Rules:
 - If a person has more than one explicitly stated valid position, list them once under "Any" and do not list them under individual positions.
 - Put people with no explicitly stated valid position under "N/A".
 - Return plain text only.
-- Exclude number after name
 - Include a heading only when it has at least one person.
 - Use this format:
 
