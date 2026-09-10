@@ -101,7 +101,7 @@ Rules:
 - Extract each listed person's name and position.
 - Valid positions are: GK, CB, RLB, MF, FW.
 - Put a person in a position only when that position is explicitly written.
-- Preserve each name exactly as written.
+- Preserve each name exactly as written, except drop any trailing jersey number attached to it (e.g. "จก 91" -> "จก", "Putter 98" -> "Putter"). Do not alter the name itself otherwise.
 - Do not invent, infer, omit, or duplicate players.
 - If a person has more than one explicitly stated valid position, list them once under "Any" and do not list them under individual positions.
 - Put people with no explicitly stated valid position under "N/A".
