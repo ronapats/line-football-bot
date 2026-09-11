@@ -100,7 +100,6 @@ function parseParticipants(footballList) {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => line.replace(/^\d+\.\s*/, ""))
-    .map((line) => line.replace(/\s*\([^)]*\)\s*$/, ""))
     .map((line) => line.trim())
     .filter(Boolean);
 }
