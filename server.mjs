@@ -203,11 +203,8 @@ Rules:
 - Preserve each name exactly as written, minus any jersey number, position label, parenthetical comment, or checkmark.
 - Do not include player numbers.
 - Do not invent, infer, omit, or duplicate players.
-- Return only unpaid player names, comma-separated, in this exact format:
-
-ยังไม่จ่าย: name, name, name
-
-- If every player has paid, return exactly: ยังไม่จ่าย: -
+- Return only the unpaid player names, comma-separated, with no other text.
+- If every player has paid, return exactly: -
         `.trim(),
       },
       {
@@ -217,9 +214,18 @@ Rules:
     ],
   });
 
-  return (
-    response.choices[0]?.message?.content || "Unable to check payments."
-  ).slice(0, 4500);
+  const raw = (response.choices[0]?.message?.content || "").trim();
+  const names =
+    raw === "-" || !raw
+      ? []
+      : raw
+          .split(",")
+          .map((name) => name.trim())
+          .filter(Boolean);
+
+  return `ยังไม่จ่าย (${names.length} คน): ${
+    names.length ? names.join(", ") : "-"
+  }`.slice(0, 4500);
 }
 
 async function reply(replyToken, text) {
