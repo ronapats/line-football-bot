@@ -197,7 +197,8 @@ Rules:
 - Read the numbered player list only.
 - A player is paid if a checkmark appears anywhere after their name on the same line, including any of: "✅", "✅️", "(checkmark)".
 - A player is not paid if no such checkmark appears after their name.
-- Ignore everything else on the line: jersey numbers, position labels (e.g. GK), comments, arrival time, opponent info, payment instructions.
+- Exception: a player marked "GK" does not need to pay - never include a GK player in the unpaid list, even without a checkmark.
+- Ignore everything else on the line: jersey numbers, other position labels, comments, arrival time, opponent info, payment instructions.
 - Ignore checkmarks that appear outside the numbered player list.
 - Preserve each name exactly as written, minus any jersey number, position label, parenthetical comment, or checkmark.
 - Do not include player numbers.
