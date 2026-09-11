@@ -83,8 +83,57 @@ async function handleEvent(event) {
     return;
   }
 
-  const result = await organizeList(footballList);
+  const result = /^\s*Participants:/m.test(footballList)
+    ? randomizeTeams(footballList)
+    : await organizeList(footballList);
   await reply(event.replyToken, result);
+}
+
+function parseParticipants(footballList) {
+  const match = footballList.match(
+    /Participants:\s*([\s\S]*?)(?:\n\s*Waiting:|$)/i
+  );
+  if (!match) return [];
+
+  return match[1]
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => line.replace(/^\d+\.\s*/, ""))
+    .map((line) => line.replace(/\s*\([^)]*\)\s*$/, ""))
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function shuffle(items) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function randomizeTeams(footballList) {
+  const participants = parseParticipants(footballList).slice(0, 21);
+
+  if (participants.length < 21) {
+    return `Need 21 participants to form 3 teams, only found ${participants.length}.`;
+  }
+
+  const shuffled = shuffle(participants);
+  const teams = [
+    ["A", shuffled.slice(0, 7)],
+    ["B", shuffled.slice(7, 14)],
+    ["C", shuffled.slice(14, 21)],
+  ];
+
+  return teams
+    .map(
+      ([label, players]) =>
+        `Team ${label}:\n${players.map((name) => `- ${name}`).join("\n")}`
+    )
+    .join("\n\n");
 }
 
 async function organizeList(footballList) {
