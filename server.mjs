@@ -121,16 +121,21 @@ function shuffle(items) {
 function randomizeTeams(footballList) {
   const participants = parseParticipants(footballList).slice(0, 21);
 
-  if (participants.length < 21) {
-    return `Need 21 participants to form 3 teams, only found ${participants.length}.`;
+  if (participants.length < 18) {
+    return `Need at least 18 participants to form 3 teams, only found ${participants.length}.`;
   }
 
   const shuffled = shuffle(participants);
-  const teams = [
-    ["A", shuffled.slice(0, 7)],
-    ["B", shuffled.slice(7, 14)],
-    ["C", shuffled.slice(14, 21)],
-  ];
+  const base = Math.floor(shuffled.length / 3);
+  const remainder = shuffled.length % 3;
+
+  let index = 0;
+  const teams = ["A", "B", "C"].map((label, i) => {
+    const size = base + (i < remainder ? 1 : 0);
+    const players = shuffled.slice(index, index + size);
+    index += size;
+    return [label, players];
+  });
 
   return teams
     .map(
