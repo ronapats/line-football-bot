@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     if (request.method === "GET" && url.pathname === "/") {
-      return new Response("LINE football bot is running (auto-deploy test).");
+      return new Response("LINE football bot is running (auto-deploy test 2).");
     }
 
     if (request.method !== "POST" || url.pathname !== "/webhook") {
